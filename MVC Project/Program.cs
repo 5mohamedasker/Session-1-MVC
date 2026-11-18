@@ -1,3 +1,5 @@
+using MVC_Project.Middleware;
+
 namespace MVC_Project
 {
     public class Program
@@ -18,16 +20,16 @@ namespace MVC_Project
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseMiddleware<RequestTime>();
 
             app.UseHttpsRedirection();
             app.UseRouting();
 
-            app.UseAuthorization();
 
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=Home}/{action=Index}/{id:int:range(10,20)?}")
                 .WithStaticAssets();
 
             app.Run();
